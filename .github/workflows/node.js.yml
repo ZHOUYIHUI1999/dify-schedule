@@ -2,25 +2,19 @@ name: Node.js Scheduled Task
 
 on:
   schedule:
-    # 每天北京时间 21:30 触发（即 UTC 13:30）
-    - cron: '30 13 * * *'
-  workflow_dispatch:  # 可手动触发
+    - cron: '30 13 * * *'  # 每天北京时间21:30
+  workflow_dispatch:
 
 jobs:
-  build:
+  run-task:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+          node-version: 20.x
+      - name: Output time
+        run: |
+          echo "当前时间：" $(date)
