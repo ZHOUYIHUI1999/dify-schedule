@@ -2,7 +2,7 @@ name: Node.js Scheduled Task
 
 on:
   schedule:
-    - cron: '30 13 * * *'  # 每天北京时间21:30
+    - cron: '33 13 * * *'  # 每天北京时间21:30
   workflow_dispatch:
 
 jobs:
