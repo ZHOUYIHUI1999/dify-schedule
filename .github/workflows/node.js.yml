@@ -1,20 +1,25 @@
-name: Node.js Scheduled Task
+name: Daily Node.js Task
 
 on:
   schedule:
-    - cron: '33 13 * * *'  # 每天北京时间21:30
-  workflow_dispatch:
+    - cron: '30 1 * * *'  # 每天北京时间 9:30（UTC时间 1:30）
+  workflow_dispatch:  # 可手动触发
 
 jobs:
-  run-task:
+  run-daily-task:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-      - name: Output time
-        run: |
-          echo "当前时间：" $(date)
+          node-version: '20.x'
+
+      - name: Install dependencies (if any)
+        run: npm install
+
+      - name: Run daily Node.js task
+        run: node daily-task.js
